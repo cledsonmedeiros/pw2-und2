@@ -1,0 +1,29 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": "airbnb-base",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "extends": [
+            "plugin:vue/base"
+        ]
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+        "no-console": "off",
+        "object-curly-newline": "off",
+        "no-unused-vars": "off",
+        "prefer-const": "off",
+        "no-empty": "off",
+        "no-shadow": "off"
+    }
+}
