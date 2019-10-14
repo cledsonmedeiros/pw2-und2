@@ -64,11 +64,7 @@ class City extends \yii\db\ActiveRecord
     public function fields(){
         $fields = parent::fields();
 
-        //fazer calculo com dados da tabela
-        // $fields['porArea'] = function ($model) {
-        //     return $model->Population / $model->SurfaceArea;
-        // };
-
+        //remover atributo específico
         $fields['Population'] = function($model){
             if($model->ID == 207) return null;
             return $model->Population;
