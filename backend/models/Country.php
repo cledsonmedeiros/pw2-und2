@@ -95,4 +95,13 @@ class Country extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CountryLanguage::className(), ['CountryCode' => 'Code']);
     }
+
+    public function fields(){
+        $fields = parent::fields();
+
+        //remover atributo
+        unset($fields['LocalName']);
+
+        return $fields;
+    }
 }
