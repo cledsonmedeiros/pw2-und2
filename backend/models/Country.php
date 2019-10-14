@@ -109,4 +109,8 @@ class Country extends \yii\db\ActiveRecord
 
         return $fields;
     }
+
+    public function extraFields(){
+        return ['cities'];
+    }
 }
