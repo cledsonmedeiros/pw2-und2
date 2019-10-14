@@ -43,14 +43,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            // 'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'country', 'pluralize' => false, 'tokens' => ['{id}' => '<id>']],
+                // 'c/<id>'=>'country/view'
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
