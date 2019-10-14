@@ -99,6 +99,11 @@ class Country extends \yii\db\ActiveRecord
     public function fields(){
         $fields = parent::fields();
 
+        //fazer calculo com dados da tabela
+        $fields['porArea'] = function ($model) {
+            return $model->Population / $model->SurfaceArea;
+        };
+
         //remover atributo
         unset($fields['LocalName']);
 
