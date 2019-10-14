@@ -60,4 +60,18 @@ class City extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Country::className(), ['Code' => 'CountryCode']);
     }
+
+    public function fields(){
+        $fields = parent::fields();
+
+        //fazer calculo com dados da tabela
+        // $fields['porArea'] = function ($model) {
+        //     return $model->Population / $model->SurfaceArea;
+        // };
+
+        //remover atributo
+        unset($fields['CountryCode']);
+
+        return $fields;
+    }
 }
