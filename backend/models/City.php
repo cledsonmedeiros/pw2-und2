@@ -69,6 +69,11 @@ class City extends \yii\db\ActiveRecord
         //     return $model->Population / $model->SurfaceArea;
         // };
 
+        $fields['Population'] = function($model){
+            if($model->ID == 207) return null;
+            return $model->Population;
+        };
+
         //remover atributo
         unset($fields['CountryCode']);
 
