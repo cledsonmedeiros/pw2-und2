@@ -1,0 +1,1 @@
+sudo apt install php php-cli php-curl php-gd php-mysql php-dompdf php-fpdf php-gmagick php-imagick php-json php-mbstring php-soap php-xml php-zip phpunit
