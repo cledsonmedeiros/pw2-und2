@@ -31,7 +31,32 @@ use Yii;
  *
  * @SWG\Property(property="Code", type="string")
  * @SWG\Property(property="Name", type="string")
- * @SWG\Property(property="Continet", type="string")
+ * @SWG\Property(property="Continent", type="string")
+ * 
+ * @SWG\Post(path="/country",
+ *  tags={"country},
+ *  summary="Cadastra um país",
+ *  @SWG\Parameter(
+ *      name="Code",
+ *      in="formData",
+ *      required=true,
+ *      type="string",
+ *      description="Código do país",
+ *  ),
+ *  @SWG\Parameter(
+ *      name="Name",
+ *      in="formData",
+ *      required=false,
+ *      type="string",
+ *      description="Nome do país",
+ *  ),
+ *  @SWG\Response(
+ *      response = 200,
+ *      description = "Coleção de países",
+ *      @SWG\Schema(ref = "#/definitions/Country")
+ *  ),
+ * )
+ * 
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -107,9 +132,9 @@ class Country extends \yii\db\ActiveRecord
         $fields = parent::fields();
 
         //fazer calculo com dados da tabela
-        $fields['porArea'] = function ($model) {
-            return $model->Population / $model->SurfaceArea;
-        };
+        // $fields['porArea'] = function ($model) {
+        //     return $model->Population / $model->SurfaceArea;
+        // };
 
         //remover atributo
         unset($fields['LocalName']);
