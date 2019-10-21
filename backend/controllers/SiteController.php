@@ -9,6 +9,16 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\Url;
+
+/**
+ * @SWG\Swagger(
+ *     basePath="/",
+ *     produces={"application/json", "application/xml"},
+ *     consumes={"application/x-www-form-urlencoded"},
+ *     @SWG\Info(version="0.0.0.0.1", title="API PW2"),
+ * )
+ */
 
 class SiteController extends Controller
 {
@@ -44,6 +54,19 @@ class SiteController extends Controller
     public function actions()
     {
         return [
+            'docs' => [
+                'class' => 'yii2mod\swagger\SwaggerUIRenderer',
+                'restUrl' => Url::to(['site/json-schema']),
+            ],
+            'json-schema' => [
+                'class' => 'yii2mod\swagger\OpenAPIRenderer',
+                // Тhe list of directories that contains the swagger annotations.
+                'scanDir' => [
+                    Yii::getAlias('@app/controllers'),
+                    Yii::getAlias('@app/models'),
+                ],
+                'cacheDuration' => 1,
+            ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],

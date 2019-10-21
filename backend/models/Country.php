@@ -25,6 +25,13 @@ use Yii;
  *
  * @property City[] $cities
  * @property CountryLanguage[] $countryLanguages
+ * 
+ * /**
+ * @SWG\Definition(required={"Code"})
+ *
+ * @SWG\Property(property="Code", type="string")
+ * @SWG\Property(property="Name", type="string")
+ * @SWG\Property(property="Continet", type="string")
  */
 class Country extends \yii\db\ActiveRecord
 {
