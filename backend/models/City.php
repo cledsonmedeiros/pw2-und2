@@ -17,6 +17,8 @@ use Yii;
  */
 class City extends \yii\db\ActiveRecord
 {
+    public $name_repeticao;
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +34,8 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             [['Population'], 'integer'],
-            [['Name'], 'string', 'max' => 35],
+            [['Name', 'name_repeticao'], 'string', 'max' => 35],
+            [['name_repeticao'], 'compare', 'compareAttribute' => 'Name'],
             [['CountryCode'], 'string', 'max' => 3],
             [['District'], 'string', 'max' => 20],
             [['CountryCode'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['CountryCode' => 'Code']],
@@ -47,6 +50,7 @@ class City extends \yii\db\ActiveRecord
         return [
             'ID' => Yii::t('app', 'ID'),
             'Name' => Yii::t('app', 'Name'),
+            'name_repeticao' => Yii::t('app', 'Repetição do nome'),
             'CountryCode' => Yii::t('app', 'Country Code'),
             'District' => Yii::t('app', 'District'),
             'Population' => Yii::t('app', 'Population'),
