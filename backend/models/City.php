@@ -34,7 +34,7 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             [['Population'], 'integer'],
-            [['Name', 'name_repeticao'], 'string', 'max' => 35],
+            [['Name', 'name_repeticao'], 'email', 'checkDNS' => true],
             [['name_repeticao'], 'compare', 'compareAttribute' => 'Name'],
             [['CountryCode'], 'string', 'max' => 3],
             [['District'], 'string', 'max' => 20],
