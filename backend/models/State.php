@@ -5,25 +5,24 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "city".
+ * This is the model class for table "state".
  *
  * @property int $id
  * @property string $name
  * @property int $country_id
- * @property int $state_id
  *
- * @property Country $country
- * @property State $state
+ * @property City[] $cities
  * @property Event[] $events
+ * @property Country $country
  */
-class City extends \yii\db\ActiveRecord
+class State extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'city';
+        return 'state';
     }
 
     /**
@@ -32,10 +31,9 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['country_id', 'state_id'], 'integer'],
+            [['country_id'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['country_id' => 'id']],
-            [['state_id'], 'exist', 'skipOnError' => true, 'targetClass' => State::className(), 'targetAttribute' => ['state_id' => 'id']],
         ];
     }
 
@@ -48,8 +46,23 @@ class City extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'country_id' => Yii::t('app', 'Country ID'),
-            'state_id' => Yii::t('app', 'State ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCities()
+    {
+        return $this->hasMany(City::className(), ['state_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvents()
+    {
+        return $this->hasMany(Event::className(), ['state_id' => 'id']);
     }
 
     /**
@@ -58,21 +71,5 @@ class City extends \yii\db\ActiveRecord
     public function getCountry()
     {
         return $this->hasOne(Country::className(), ['id' => 'country_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getState()
-    {
-        return $this->hasOne(State::className(), ['id' => 'state_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEvents()
-    {
-        return $this->hasMany(Event::className(), ['city_id' => 'id']);
     }
 }

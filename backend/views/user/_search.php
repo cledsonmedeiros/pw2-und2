@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\CitySearch */
+/* @var $model app\models\UserSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="city-search">
+<div class="user-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,11 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'username') ?>
 
-    <?= $form->field($model, 'country_id') ?>
+    <?= $form->field($model, 'password') ?>
 
-    <?= $form->field($model, 'state_id') ?>
+    <?= $form->field($model, 'cpf') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

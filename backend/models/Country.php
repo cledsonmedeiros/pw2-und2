@@ -5,36 +5,16 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "Country".
+ * This is the model class for table "country".
  *
- * @property string $Code
- * @property string $Name
- * @property string $Continent
- * @property string $Region
- * @property double $SurfaceArea
- * @property int $IndepYear
- * @property int $Population
- * @property double $LifeExpectancy
- * @property double $GNP
- * @property double $GNPOld
- * @property string $LocalName
- * @property string $GovernmentForm
- * @property string $HeadOfState
- * @property int $Capital
- * @property string $Code2
+ * @property int $id
+ * @property string $name
+ * @property int $region_id
  *
  * @property City[] $cities
- * @property CountryLanguage[] $countryLanguages
- * 
- * /**
- * @SWG\Definition(required={"Code"})
- *
- * @SWG\Property(property="Code", type="string")
- * @SWG\Property(property="Name", type="string")
- * @SWG\Property(property="Continent", type="string")
- * 
- * )
- * 
+ * @property Region $region
+ * @property Event[] $events
+ * @property State[] $states
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -43,7 +23,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Country';
+        return 'country';
     }
 
     /**
@@ -52,17 +32,11 @@ class Country extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Code'], 'required'],
-            [['Continent'], 'string'],
-            [['SurfaceArea', 'LifeExpectancy', 'GNP', 'GNPOld'], 'number'],
-            [['IndepYear', 'Population', 'Capital'], 'integer'],
-            [['Code'], 'string', 'max' => 3],
-            [['Name'], 'string', 'max' => 52],
-            [['Region'], 'string', 'max' => 26],
-            [['LocalName', 'GovernmentForm'], 'string', 'max' => 45],
-            [['HeadOfState'], 'string', 'max' => 60],
-            [['Code2'], 'string', 'max' => 2],
-            [['Code'], 'unique'],
+            [['id'], 'required'],
+            [['id', 'region_id'], 'integer'],
+            [['name'], 'string', 'max' => 100],
+            [['id'], 'unique'],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
 
@@ -72,21 +46,9 @@ class Country extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Code' => Yii::t('app', 'Code'),
-            'Name' => Yii::t('app', 'Name'),
-            'Continent' => Yii::t('app', 'Continent'),
-            'Region' => Yii::t('app', 'Region'),
-            'SurfaceArea' => Yii::t('app', 'Surface Area'),
-            'IndepYear' => Yii::t('app', 'Indep Year'),
-            'Population' => Yii::t('app', 'Population'),
-            'LifeExpectancy' => Yii::t('app', 'Life Expectancy'),
-            'GNP' => Yii::t('app', 'Gnp'),
-            'GNPOld' => Yii::t('app', 'Gnp Old'),
-            'LocalName' => Yii::t('app', 'Local Name'),
-            'GovernmentForm' => Yii::t('app', 'Government Form'),
-            'HeadOfState' => Yii::t('app', 'Head Of State'),
-            'Capital' => Yii::t('app', 'Capital'),
-            'Code2' => Yii::t('app', 'Code2'),
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'region_id' => Yii::t('app', 'Region ID'),
         ];
     }
 
@@ -95,32 +57,30 @@ class Country extends \yii\db\ActiveRecord
      */
     public function getCities()
     {
-        return $this->hasMany(City::className(), ['CountryCode' => 'Code']);
+        return $this->hasMany(City::className(), ['country_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCountryLanguages()
+    public function getRegion()
     {
-        return $this->hasMany(CountryLanguage::className(), ['CountryCode' => 'Code']);
+        return $this->hasOne(Region::className(), ['id' => 'region_id']);
     }
 
-    public function fields(){
-        $fields = parent::fields();
-
-        //fazer calculo com dados da tabela
-        // $fields['porArea'] = function ($model) {
-        //     return $model->Population / $model->SurfaceArea;
-        // };
-
-        //remover atributo
-        unset($fields['LocalName']);
-
-        return $fields;
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvents()
+    {
+        return $this->hasMany(Event::className(), ['country_id' => 'id']);
     }
 
-    public function extraFields(){
-        return ['cities'];
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStates()
+    {
+        return $this->hasMany(State::className(), ['country_id' => 'id']);
     }
 }
