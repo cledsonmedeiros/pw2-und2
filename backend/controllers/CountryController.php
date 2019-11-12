@@ -2,6 +2,9 @@
 namespace app\controllers;
 
 use yii\rest\ActiveController;
+use yii\filters\auth\HttpBasicAuth;
+use app\models\User;
+use app\components\filters\MyFilter;
 
 /**
 * @SWG\Get(path="/country",
@@ -78,5 +81,22 @@ use yii\rest\ActiveController;
 
 class CountryController extends ActiveController
 {
-   public $modelClass = 'app\models\Country';
+    public $modelClass = 'app\models\Country';
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        //   $behaviors['basicAuth'] = [
+        //       'class' => HttpBasicAuth::className(),
+        //       'auth' => function ($username, $password) {
+        //           return User::findOne(['username' => $username, 'password' => $password]);
+        //       },
+        //   ];
+
+        $behaviors['myfilter'] = [
+           'class' => MyFilter::className()
+        ];
+
+        return $behaviors;
+    }
 }
